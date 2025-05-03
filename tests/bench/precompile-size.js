@@ -3,13 +3,13 @@ var _ = require('underscore'),
 
 module.exports = function (grunt, callback) {
   // Deferring to here in case we have a build for parser, etc as part of this grunt exec
-  var Handlebars = require('../../lib');
+  var Guardrails = require('../../lib');
 
   var templateSizes = {};
   _.each(templates, function (info, template) {
     var src = info.handlebars,
-      compiled = Handlebars.precompile(src, {}),
-      knownHelpers = Handlebars.precompile(src, {
+      compiled = Guardrails.precompile(src, {}),
+      knownHelpers = Guardrails.precompile(src, {
         knownHelpersOnly: true,
         knownHelpers: info.helpers,
       });

@@ -35,7 +35,7 @@ describe('security issues', function () {
   });
 
   describe('GH-1558: Prevent explicit call of helperMissing-helpers', function () {
-    if (!Handlebars.compile) {
+    if (!Guardrails.compile) {
       return;
     }
 
@@ -51,7 +51,7 @@ describe('security issues', function () {
       it('should throw an exception when calling  "{{blockHelperMissing "abc" .}}" ', function () {
         var functionCalls = [];
         expect(function () {
-          var template = Handlebars.compile('{{blockHelperMissing "abc" .}}');
+          var template = Guardrails.compile('{{blockHelperMissing "abc" .}}');
           template({
             fn: function () {
               functionCalls.push('called');
@@ -74,12 +74,12 @@ describe('security issues', function () {
 
     describe('with the option "allowCallsToHelperMissing" set to true', function () {
       it('should not throw an exception when calling  "{{helperMissing}}" ', function () {
-        var template = Handlebars.compile('{{helperMissing}}');
+        var template = Guardrails.compile('{{helperMissing}}');
         template({}, { allowCallsToHelperMissing: true });
       });
 
       it('should not throw an exception when calling  "{{#helperMissing}}{{/helperMissing}}" ', function () {
-        var template = Handlebars.compile(
+        var template = Guardrails.compile(
           '{{#helperMissing}}{{/helperMissing}}'
         );
         template({}, { allowCallsToHelperMissing: true });
@@ -87,7 +87,7 @@ describe('security issues', function () {
 
       it('should not throw an exception when calling  "{{blockHelperMissing "abc" .}}" ', function () {
         var functionCalls = [];
-        var template = Handlebars.compile('{{blockHelperMissing "abc" .}}');
+        var template = Guardrails.compile('{{blockHelperMissing "abc" .}}');
         template(
           {
             fn: function () {
@@ -100,7 +100,7 @@ describe('security issues', function () {
       });
 
       it('should not throw an exception when calling  "{{#blockHelperMissing .}}{{/blockHelperMissing}}"', function () {
-        var template = Handlebars.compile(
+        var template = Guardrails.compile(
           '{{#blockHelperMissing true}}sdads{{/blockHelperMissing}}'
         );
         template({}, { allowCallsToHelperMissing: true });
@@ -189,7 +189,7 @@ describe('security issues', function () {
             .toCompileTo('');
 
           expect(spy.calledOnce).to.be.true();
-          expect(spy.args[0][0]).to.match(/Handlebars: Access has been denied/);
+          expect(spy.args[0][0]).to.match(/Guardrails: Access has been denied/);
         });
 
         it('should only log the warning once', function () {
@@ -206,7 +206,7 @@ describe('security issues', function () {
             .toCompileTo('');
 
           expect(spy.calledOnce).to.be.true();
-          expect(spy.args[0][0]).to.match(/Handlebars: Access has been denied/);
+          expect(spy.args[0][0]).to.match(/Guardrails: Access has been denied/);
         });
 
         it('can be allowed, which disables the warning', function () {
@@ -308,7 +308,7 @@ describe('security issues', function () {
             .toCompileTo('');
 
           expect(spy.calledOnce).to.be.true();
-          expect(spy.args[0][0]).to.match(/Handlebars: Access has been denied/);
+          expect(spy.args[0][0]).to.match(/Guardrails: Access has been denied/);
         });
 
         it('can be explicitly prohibited by default, which disables the warning', function () {

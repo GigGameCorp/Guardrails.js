@@ -32,17 +32,17 @@
     <script>
       requirejs.config({
         paths: {
-          'handlebars.runtime': '/dist/handlebars.runtime'
+          'guardrails.runtime': '/dist/guardrails.runtime'
         }
       });
     </script>
     <script>
       onload = function(){
-        require(['handlebars.runtime'], function(Handlebars) {
+        require(['guardrails.runtime'], function(Guardrails) {
           describe('runtime', function() {
             it('should load', function() {
-              equal(!!Handlebars.template, true);
-              equal(!!Handlebars.VERSION, true);
+              equal(!!Guardrails.template, true);
+              equal(!!Guardrails.VERSION, true);
             });
           });
 

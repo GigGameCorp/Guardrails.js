@@ -8,12 +8,12 @@ try {
 }
 
 describe('source-map', function () {
-  if (!Handlebars.precompile || !SourceMap) {
+  if (!Guardrails.precompile || !SourceMap) {
     return;
   }
 
   it('should safely include source map info', function () {
-    var template = Handlebars.precompile('{{hello}}', {
+    var template = Guardrails.precompile('{{hello}}', {
       destName: 'dest.js',
       srcName: 'src.hbs',
     });
@@ -24,7 +24,7 @@ describe('source-map', function () {
   it('should map source properly', function () {
     var templateSource =
         '  b{{hello}}  \n  {{bar}}a {{#block arg hash=(subex 1 subval)}}{{/block}}',
-      template = Handlebars.precompile(templateSource, {
+      template = Guardrails.precompile(templateSource, {
         destName: 'dest.js',
         srcName: 'src.hbs',
       });

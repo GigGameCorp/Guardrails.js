@@ -227,7 +227,7 @@ describe('Regressions', function () {
     expectTemplate('{{#wrap}}{{>partial}}{{/wrap}}')
       .withHelpers({
         wrap: function (options) {
-          return new Handlebars.SafeString(options.fn());
+          return new Guardrails.SafeString(options.fn());
         },
       })
       .withPartials({
@@ -364,51 +364,51 @@ describe('Regressions', function () {
 
   describe('GH-1561: 4.3.x should still work with precompiled templates from 4.0.0 <= x < 4.3.0', function () {
     it('should compile and execute templates', function () {
-      var newHandlebarsInstance = Handlebars.create();
+      var newGuardrailsInstance = Guardrails.create();
 
-      registerTemplate(newHandlebarsInstance, compiledTemplateVersion7());
-      newHandlebarsInstance.registerHelper('loud', function (value) {
+      registerTemplate(newGuardrailsInstance, compiledTemplateVersion7());
+      newGuardrailsInstance.registerHelper('loud', function (value) {
         return value.toUpperCase();
       });
-      var result = newHandlebarsInstance.templates['test.hbs']({
+      var result = newGuardrailsInstance.templates['test.hbs']({
         name: 'yehuda',
       });
       equals(result.trim(), 'YEHUDA');
     });
 
     it('should call "helperMissing" if a helper is missing', function () {
-      var newHandlebarsInstance = Handlebars.create();
+      var newGuardrailsInstance = Guardrails.create();
 
       shouldThrow(
         function () {
-          registerTemplate(newHandlebarsInstance, compiledTemplateVersion7());
-          newHandlebarsInstance.templates['test.hbs']({});
+          registerTemplate(newGuardrailsInstance, compiledTemplateVersion7());
+          newGuardrailsInstance.templates['test.hbs']({});
         },
-        Handlebars.Exception,
+        Guardrails.Exception,
         'Missing helper: "loud"'
       );
     });
 
     it('should pass "options.lookupProperty" to "lookup"-helper, even with old templates', function () {
-      var newHandlebarsInstance = Handlebars.create();
+      var newGuardrailsInstance = Guardrails.create();
       registerTemplate(
-        newHandlebarsInstance,
+        newGuardrailsInstance,
         compiledTemplateVersion7_usingLookupHelper()
       );
 
-      newHandlebarsInstance.templates['test.hbs']({});
+      newGuardrailsInstance.templates['test.hbs']({});
 
       expect(
-        newHandlebarsInstance.templates['test.hbs']({
+        newGuardrailsInstance.templates['test.hbs']({
           property: 'a',
           test: { a: 'b' },
         })
       ).to.equal('b');
     });
 
-    function registerTemplate(Handlebars, compileTemplate) {
-      var template = Handlebars.template,
-        templates = (Handlebars.templates = Handlebars.templates || {});
+    function registerTemplate(Guardrails, compileTemplate) {
+      var template = Guardrails.template,
+        templates = (Guardrails.templates = Guardrails.templates || {});
       templates['test.hbs'] = template(compileTemplate);
     }
 
@@ -470,26 +470,26 @@ describe('Regressions', function () {
 
   describe('GH-1598: Performance degradation for partials since v4.3.0', function () {
     // Do not run test for runs without compiler
-    if (!Handlebars.compile) {
+    if (!Guardrails.compile) {
       return;
     }
 
-    var newHandlebarsInstance;
+    var newGuardrailsInstance;
     beforeEach(function () {
-      newHandlebarsInstance = Handlebars.create();
+      newGuardrailsInstance = Guardrails.create();
     });
     afterEach(function () {
       sinon.restore();
     });
 
     it('should only compile global partials once', function () {
-      var templateSpy = sinon.spy(newHandlebarsInstance, 'template');
-      newHandlebarsInstance.registerPartial({
+      var templateSpy = sinon.spy(newGuardrailsInstance, 'template');
+      newGuardrailsInstance.registerPartial({
         dude: 'I am a partial',
       });
       var string = 'Dudes: {{> dude}} {{> dude}}';
-      newHandlebarsInstance.compile(string)(); // This should compile template + partial once
-      newHandlebarsInstance.compile(string)(); // This should only compile template
+      newGuardrailsInstance.compile(string)(); // This should compile template + partial once
+      newGuardrailsInstance.compile(string)(); // This should only compile template
       equal(templateSpy.callCount, 3);
       sinon.restore();
     });

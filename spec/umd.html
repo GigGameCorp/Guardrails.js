@@ -33,7 +33,7 @@
     <script>
       requirejs.config({
         paths: {
-          handlebars: '/dist/handlebars',
+          handlebars: '/dist/guardrails,
           tests: '/tmp/tests'
         }
       });
@@ -62,8 +62,8 @@
     <script>
       onload = function(){
 
-        require(['handlebars'], function(Handlebars) {
-          window.Handlebars = Handlebars;
+        require(['handlebars'], function(Guardrails) {
+          window.Guardrails = Guardrails;
 
           require(['tests'], function() {
             mocha.globals(['mochaResults'])

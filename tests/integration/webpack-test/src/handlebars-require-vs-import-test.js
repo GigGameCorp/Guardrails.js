@@ -1,10 +1,10 @@
-import * as HandlebarsViaImport from 'handlebars';
-const HandlebarsViaRequire = require('handlebars');
+import * as GuardrailsViaImport from 'handlebars';
+const GuardrailsViaRequire = require('handlebars');
 import { assertEquals } from './lib/assert';
 
-HandlebarsViaImport.registerHelper('loud', function (text) {
+GuardrailsViaImport.registerHelper('loud', function (text) {
   return text.toUpperCase();
 });
 
-const template = HandlebarsViaRequire.compile('Author: {{loud author}}');
+const template = GuardrailsViaRequire.compile('Author: {{loud author}}');
 assertEquals(template({ author: 'Yehuda' }), 'Author: YEHUDA');

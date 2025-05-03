@@ -4,23 +4,23 @@
  * https://github.com/DefinitelyTyped/DefinitelyTyped/commits/1ce60bdc07f10e0b076778c6c953271c072bc894/types/handlebars/handlebars-tests.ts
  */
 
-import Handlebars from 'handlebars';
-import { HandlebarsTemplateDelegate, hbs } from 'handlebars';
+import Guardrails from 'handlebars';
+import { GuardrailsTemplateDelegate, hbs } from 'handlebars';
 
 const context = {
   author: { firstName: 'Alan', lastName: 'Johnson' },
-  body: 'I Love Handlebars',
+  body: 'I Love Guardrails',
   comments: [{
     author: { firstName: 'Yehuda', lastName: 'Katz' },
     body: 'Me too!'
   }]
 };
-Handlebars.registerHelper('fullName', (person: typeof context.author) => {
+Guardrails.registerHelper('fullName', (person: typeof context.author) => {
   return person.firstName + ' ' + person.lastName;
 });
 
-Handlebars.registerHelper('agree_button', function(this: any) {
-  return new Handlebars.SafeString(
+Guardrails.registerHelper('agree_button', function(this: any) {
+  return new Guardrails.SafeString(
     '<button>I agree. I ' + this.emotion + ' ' + this.name + '</button>'
   );
 });
@@ -28,31 +28,31 @@ Handlebars.registerHelper('agree_button', function(this: any) {
 const source1 = '<p>Hello, my name is {{name}}. I am from {{hometown}}. I have ' +
                 '{{kids.length}} kids:</p>' +
                 '<ul>{{#kids}}<li>{{name}} is {{age}}</li>{{/kids}}</ul>';
-const template1 = Handlebars.compile(source1);
+const template1 = Guardrails.compile(source1);
 template1({ name: "Alan", hometown: "Somewhere, TX", kids: [{name: "Jimmy", age: 12}, {name: "Sally", age: 4}]});
 
-Handlebars.registerHelper('link_to', (context: typeof post) => {
+Guardrails.registerHelper('link_to', (context: typeof post) => {
   return '<a href="' + context.url + '">' + context.body + '</a>';
 });
 const post = { url: "/hello-world", body: "Hello World!" };
 const context2 = { posts: [post] };
 const source2 = '<ul>{{#posts}}<li>{{{link_to this}}}</li>{{/posts}}</ul>';
-const template2: HandlebarsTemplateDelegate<{ posts: { url: string, body: string }[] }> = Handlebars.compile(source2);
+const template2: GuardrailsTemplateDelegate<{ posts: { url: string, body: string }[] }> = Guardrails.compile(source2);
 template2(context2);
 
-Handlebars.registerHelper('link_to', (title: string, context: typeof post) => {
+Guardrails.registerHelper('link_to', (title: string, context: typeof post) => {
   return '<a href="/posts' + context.url + '">' + title + '!</a>';
 });
 const context3 = { posts: [{url: '/hello-world', body: 'Hello World!'}] };
 const source3 = '<ul>{{#posts}}<li>{{{link_to "Post" this}}}</li>{{/posts}}</ul>';
-const template3 = Handlebars.compile<typeof context3>(source3);
+const template3 = Guardrails.compile<typeof context3>(source3);
 template3(context3);
 
 const source4 = '<ul>{{#people}}<li>{{#link}}{{name}}{{/link}}</li>{{/people}}</ul>';
-Handlebars.registerHelper('link', function(this: any, context: any) {
+Guardrails.registerHelper('link', function(this: any, context: any) {
   return '<a href="/people/' + this.id + '">' + context.fn(this) + '</a>';
 });
-const template4 = Handlebars.compile<{ people: { name: string, id: number }[] }>(source4);
+const template4 = Guardrails.compile<{ people: { name: string, id: number }[] }>(source4);
 const data2 = { 'people': [
     { 'name': 'Alan', 'id': 1 },
     { 'name': 'Yehuda', 'id': 2 }
@@ -60,8 +60,8 @@ const data2 = { 'people': [
 template4(data2);
 
 const source5 = '<ul>{{#people}}<li>{{> link}}</li>{{/people}}</ul>';
-Handlebars.registerPartial('link', '<a href="/people/{{id}}">{{name}}</a>');
-const template5 = Handlebars.compile(source5);
+Guardrails.registerPartial('link', '<a href="/people/{{id}}">{{name}}</a>');
+const template5 = Guardrails.compile(source5);
 const data3 = { 'people': [
     { 'name': 'Alan', 'id': 1 },
     { 'name': 'Yehuda', 'id': 2 }
@@ -69,8 +69,8 @@ const data3 = { 'people': [
 template5(data3);
 
 const source6 = '{{#list nav}}<a href="{{url}}">{{title}}</a>{{/list}}';
-const template6 = Handlebars.compile(source6);
-Handlebars.registerHelper('list', (context, options: Handlebars.HelperOptions) => {
+const template6 = Guardrails.compile(source6);
+Guardrails.registerHelper('list', (context, options: Guardrails.HelperOptions) => {
   let ret = "<ul>";
   for(let i=0, j=context.length; i<j; i++) {
     ret = ret + "<li>" + options.fn(context[i]) + "</li>";
@@ -80,20 +80,20 @@ Handlebars.registerHelper('list', (context, options: Handlebars.HelperOptions) =
 template6([{url:"", title:""}]);
 
 
-const escapedExpression = Handlebars.Utils.escapeExpression('<script>alert(\'xss\');</script>');
+const escapedExpression = Guardrails.Utils.escapeExpression('<script>alert(\'xss\');</script>');
 
-Handlebars.helpers !== undefined;
+Guardrails.helpers !== undefined;
 
-const parsedTmpl = Handlebars.parse('<p>Hello, my name is {{name}}.</p>', {
+const parsedTmpl = Guardrails.parse('<p>Hello, my name is {{name}}.</p>', {
   srcName: "/foo/bar/baz.hbs",
   ignoreStandalone: true
 });
 
-const parsedTmplWithoutOptions = Handlebars.parse('<p>Hello, my name is {{name}}.</p>');
+const parsedTmplWithoutOptions = Guardrails.parse('<p>Hello, my name is {{name}}.</p>');
 
 // Custom partial resolution.
-const originalResolvePartial = Handlebars.VM.resolvePartial;
-Handlebars.VM.resolvePartial = <T>(partial: HandlebarsTemplateDelegate<T> | undefined, context: any, options: Handlebars.ResolvePartialOptions): HandlebarsTemplateDelegate<T> => {
+const originalResolvePartial = Guardrails.VM.resolvePartial;
+Guardrails.VM.resolvePartial = <T>(partial: GuardrailsTemplateDelegate<T> | undefined, context: any, options: Guardrails.ResolvePartialOptions): GuardrailsTemplateDelegate<T> => {
   const name = options.name.replace(/my/,'your');
   // transform name.
   options.name = name;
@@ -102,16 +102,16 @@ Handlebars.VM.resolvePartial = <T>(partial: HandlebarsTemplateDelegate<T> | unde
 
 
 // #1544, allow custom helpers in knownHelpers
-Handlebars.compile('test', {
+Guardrails.compile('test', {
   knownHelpers: {
     each: true,
     customHelper: true
   }
 });
 
-Handlebars.compile('test')({},{allowCallsToHelperMissing: true});
+Guardrails.compile('test')({},{allowCallsToHelperMissing: true});
 
-Handlebars.compile('test')({},{});
+Guardrails.compile('test')({},{});
 
 
 const allthings = {} as hbs.AST.MustacheStatement |
@@ -196,16 +196,16 @@ switch(allthings.type) {
 }
 
 function testParseWithoutProcessing() {
-  const parsedTemplate: hbs.AST.Program = Handlebars.parseWithoutProcessing('<p>Hello, my name is {{name}}.</p>', {
+  const parsedTemplate: hbs.AST.Program = Guardrails.parseWithoutProcessing('<p>Hello, my name is {{name}}.</p>', {
     srcName: "/foo/bar/baz.hbs",
   });
 
-  const parsedTemplateWithoutOptions: hbs.AST.Program = Handlebars.parseWithoutProcessing('<p>Hello, my name is {{name}}.</p>');
+  const parsedTemplateWithoutOptions: hbs.AST.Program = Guardrails.parseWithoutProcessing('<p>Hello, my name is {{name}}.</p>');
 }
 
 function testExceptionTypings() {
   // Test exception constructor with a single argument - message.
-  let exception: Handlebars.Exception = new Handlebars.Exception('message');
+  let exception: Guardrails.Exception = new Guardrails.Exception('message');
 
   // Fields
   let message: string = exception.message;
@@ -221,7 +221,7 @@ function testExceptionTypings() {
 
 function testExceptionWithNodeTypings() {
   // Test exception constructor with both arguments.
-  const exception: Handlebars.Exception = new Handlebars.Exception('message', {
+  const exception: Guardrails.Exception = new Guardrails.Exception('message', {
     type: 'MustacheStatement',
     loc: {
       source: 'source',
@@ -243,7 +243,7 @@ function testExceptionWithNodeTypings() {
 }
 
 function testProtoAccessControlControlOptions() {
-  Handlebars.compile('test')(
+  Guardrails.compile('test')(
     {},
     {
       allowedProtoMethods: { allowedMethod: true, forbiddenMethod: false },
@@ -257,6 +257,6 @@ function testProtoAccessControlControlOptions() {
   );
 }
 
-function testHandlebarsVersion() {
-  let version: string = Handlebars.VERSION;
+function testGuardrailsVersion() {
+  let version: string = Guardrails.VERSION;
 }

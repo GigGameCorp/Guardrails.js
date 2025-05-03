@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Guardrails BoundView Demo</title>
+	<script src="/dist/guardrails.js"></script>
+	<style>
+		body {
+			font-family: sans-serif;
+			padding: 20px;
+		}
+
+		input, button {
+			margin: 5px 0;
+			padding: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script id="template-demo" type="text/x-handlebars-template">
+		<h2>Welcome, {{name}}!</h2>
+		<label>
+			Name: <input type="text" {{{bind 'base.name'}}} />
+		</label>
+		<br>
+		<button {{{click "resetName" false}}}>Reset to Default</button>
+		<p>Live value: <strong>{{name}}</strong></p>
+	</script>
+
+	<script>
+		class DemoView extends Guardrails.BoundView {
+			constructor() {
+				super("#app", "#template-demo");
+				this.name = "Alice";
+				this.render();
+			}
+
+			resetName() {
+				this.name = "Alice";
+				this.render();
+			}
+		}
+
+		document.addEventListener("DOMContentLoaded", () => {
+			new DemoView();
+		});
+	</script>
+</body>
+</html>

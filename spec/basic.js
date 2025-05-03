@@ -1,7 +1,7 @@
 global.handlebarsEnv = null;
 
 beforeEach(function () {
-  global.handlebarsEnv = Handlebars.create();
+  global.handlebarsEnv = Guardrails.create();
 });
 
 describe('basic context', function () {
@@ -234,7 +234,7 @@ describe('basic context', function () {
     expectTemplate('{{awesome}}')
       .withInput({
         awesome: function () {
-          return new Handlebars.SafeString("&'\\<>");
+          return new Guardrails.SafeString("&'\\<>");
         },
       })
       .withMessage("functions returning safestrings aren't escaped")

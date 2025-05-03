@@ -11,11 +11,11 @@ global.expect = chai.expect;
 
 global.sinon = require('sinon');
 
-global.Handlebars = 'no-conflict';
+global.Guardrails = 'no-conflict';
 
-var filename = 'dist/handlebars.runtime.js';
+var filename = 'dist/guardrails.runtime.js';
 if (global.minimizedTest) {
-  filename = 'dist/handlebars.runtime.min.js';
+  filename = 'dist/guardrails.runtime.min.js';
 }
 vm.runInThisContext(
   fs.readFileSync(__dirname + '/../../' + filename),

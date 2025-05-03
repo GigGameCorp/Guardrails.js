@@ -1,12 +1,12 @@
 describe('compiler', function () {
-  if (!Handlebars.compile) {
+  if (!Guardrails.compile) {
     return;
   }
 
   describe('#equals', function () {
     function compile(string) {
-      var ast = Handlebars.parse(string);
-      return new Handlebars.Compiler().compile(ast, {});
+      var ast = Guardrails.parse(string);
+      return new Guardrails.Compiler().compile(ast, {});
     }
 
     it('should treat as equal', function () {
@@ -63,23 +63,23 @@ describe('compiler', function () {
     it('should fail with invalid input', function () {
       shouldThrow(
         function () {
-          Handlebars.compile(null);
+          Guardrails.compile(null);
         },
         Error,
-        'You must pass a string or Handlebars AST to Handlebars.compile. You passed null'
+        'You must pass a string or Guardrails AST to Guardrails.compile. You passed null'
       );
       shouldThrow(
         function () {
-          Handlebars.compile({});
+          Guardrails.compile({});
         },
         Error,
-        'You must pass a string or Handlebars AST to Handlebars.compile. You passed [object Object]'
+        'You must pass a string or Guardrails AST to Guardrails.compile. You passed [object Object]'
       );
     });
 
     it('should include the location in the error (row and column)', function () {
       try {
-        Handlebars.compile(' \n  {{#if}}\n{{/def}}')();
+        Guardrails.compile(' \n  {{#if}}\n{{/def}}')();
         equal(
           true,
           false,
@@ -94,7 +94,7 @@ describe('compiler', function () {
         if (Object.getOwnPropertyDescriptor(err, 'column').writable) {
           // In Safari 8, the column-property is read-only. This means that even if it is set with defineProperty,
           // its value won't change (https://github.com/jquery/esprima/issues/1290#issuecomment-132455482)
-          // Since this was neither working in Handlebars 3 nor in 4.0.5, we only check the column for other browsers.
+          // Since this was neither working in Guardrails 3 nor in 4.0.5, we only check the column for other browsers.
           equal(err.column, 5, 'Checking error column');
         }
         equal(err.lineNumber, 2, 'Checking error row');
@@ -103,7 +103,7 @@ describe('compiler', function () {
 
     it('should include the location as enumerable property', function () {
       try {
-        Handlebars.compile(' \n  {{#if}}\n{{/def}}')();
+        Guardrails.compile(' \n  {{#if}}\n{{/def}}')();
         equal(
           true,
           false,
@@ -120,7 +120,7 @@ describe('compiler', function () {
 
     it('can utilize AST instance', function () {
       equal(
-        Handlebars.compile({
+        Guardrails.compile({
           type: 'Program',
           body: [{ type: 'ContentStatement', value: 'Hello' }],
         })(),
@@ -129,20 +129,20 @@ describe('compiler', function () {
     });
 
     it('can pass through an empty string', function () {
-      equal(Handlebars.compile('')(), '');
+      equal(Guardrails.compile('')(), '');
     });
 
     it('throws on desupported options', function () {
       shouldThrow(
         function () {
-          Handlebars.compile('Dudes', { trackIds: true });
+          Guardrails.compile('Dudes', { trackIds: true });
         },
         Error,
         'TrackIds and stringParams are no longer supported. See Github #1145'
       );
       shouldThrow(
         function () {
-          Handlebars.compile('Dudes', { stringParams: true });
+          Guardrails.compile('Dudes', { stringParams: true });
         },
         Error,
         'TrackIds and stringParams are no longer supported. See Github #1145'
@@ -151,7 +151,7 @@ describe('compiler', function () {
 
     it('should not modify the options.data property(GH-1327)', function () {
       var options = { data: [{ a: 'foo' }, { a: 'bar' }] };
-      Handlebars.compile('{{#each data}}{{@index}}:{{a}} {{/each}}', options)();
+      Guardrails.compile('{{#each data}}{{@index}}:{{a}} {{/each}}', options)();
       equal(
         JSON.stringify(options, 0, 2),
         JSON.stringify({ data: [{ a: 'foo' }, { a: 'bar' }] }, 0, 2)
@@ -160,7 +160,7 @@ describe('compiler', function () {
 
     it('should not modify the options.knownHelpers property(GH-1327)', function () {
       var options = { knownHelpers: {} };
-      Handlebars.compile('{{#each data}}{{@index}}:{{a}} {{/each}}', options)();
+      Guardrails.compile('{{#each data}}{{@index}}:{{a}} {{/each}}', options)();
       equal(
         JSON.stringify(options, 0, 2),
         JSON.stringify({ knownHelpers: {} }, 0, 2)
@@ -172,24 +172,24 @@ describe('compiler', function () {
     it('should fail with invalid input', function () {
       shouldThrow(
         function () {
-          Handlebars.precompile(null);
+          Guardrails.precompile(null);
         },
         Error,
-        'You must pass a string or Handlebars AST to Handlebars.compile. You passed null'
+        'You must pass a string or Guardrails AST to Guardrails.compile. You passed null'
       );
       shouldThrow(
         function () {
-          Handlebars.precompile({});
+          Guardrails.precompile({});
         },
         Error,
-        'You must pass a string or Handlebars AST to Handlebars.compile. You passed [object Object]'
+        'You must pass a string or Guardrails AST to Guardrails.compile. You passed [object Object]'
       );
     });
 
     it('can utilize AST instance', function () {
       equal(
         /return "Hello"/.test(
-          Handlebars.precompile({
+          Guardrails.precompile({
             type: 'Program',
             body: [{ type: 'ContentStatement', value: 'Hello' }],
           })
@@ -199,7 +199,7 @@ describe('compiler', function () {
     });
 
     it('can pass through an empty string', function () {
-      equal(/return ""/.test(Handlebars.precompile('')), true);
+      equal(/return ""/.test(Guardrails.precompile('')), true);
     });
   });
 });

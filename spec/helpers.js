@@ -653,7 +653,7 @@ describe('helpers', function () {
         .withInput({ hello: 'Hello', world: 'world' })
         .withHelper('helperMissing', function (mesg, options) {
           if (options.name === 'link_to') {
-            return new Handlebars.SafeString('<a>' + mesg + '</a>');
+            return new Guardrails.SafeString('<a>' + mesg + '</a>');
           }
         })
         .toCompileTo('Hello <a>world</a>');
@@ -664,7 +664,7 @@ describe('helpers', function () {
         .withInput({ hello: 'Hello', world: 'world' })
         .withHelper('helperMissing', function (options) {
           if (options.name === 'link_to') {
-            return new Handlebars.SafeString('<a>winning</a>');
+            return new Guardrails.SafeString('<a>winning</a>');
           }
         })
         .toCompileTo('Hello <a>winning</a>');

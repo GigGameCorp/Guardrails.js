@@ -6,12 +6,12 @@
     "main": "handlebars",
     "shim": {
       "handlebars": {
-        "exports": "Handlebars"
+        "exports": "Guardrails"
       }
     },
     "files": [
-      "handlebars.js",
-      "handlebars.runtime.js"
+      "guardrails.js",
+      "guardrails.runtime.js"
     ],
     "buildConfig": {
       "minify": true

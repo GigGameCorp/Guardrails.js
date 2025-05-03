@@ -186,7 +186,7 @@ module.exports = function (grunt) {
         expectedOutputSpec,
         expectedOutput,
       }) => {
-        const stdout = executeBinHandlebars(...binInputParameters);
+        const stdout = executeBinGuardrails(...binInputParameters);
 
         if (!expectedOutput && expectedOutputSpec) {
           expectedOutput = fs.readFileSync(expectedOutputSpec, 'utf-8');
@@ -215,7 +215,7 @@ module.exports = function (grunt) {
 
 // helper functions
 
-function executeBinHandlebars(...args) {
+function executeBinGuardrails(...args) {
   if (os.platform() === 'win32') {
     // On Windows, the executable handlebars.js file cannot be run directly
     const nodeJs = process.argv[0];

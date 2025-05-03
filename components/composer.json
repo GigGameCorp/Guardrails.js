@@ -1,6 +1,6 @@
 {
   "name": "components/handlebars.js",
-  "description": "Handlebars.js and Mustache are both logicless templating languages that keep the view and the code separated like we all know they should be.",
+  "description": "Guardrails.js and Mustache are both logicless templating languages that keep the view and the code separated like we all know they should be.",
   "homepage": "http://handlebarsjs.com",
   "license": "MIT",
   "type": "component",
@@ -22,13 +22,13 @@
     "component": {
       "name": "handlebars",
       "scripts": [
-        "handlebars.js"
+        "guardrails.js"
       ],
       "files": [
-        "handlebars.runtime.js"
+        "guardrails.runtime.js"
       ],
       "shim": {
-        "exports": "Handlebars"
+        "exports": "Guardrails"
       }
     }
   }

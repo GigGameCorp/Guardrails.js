@@ -20,7 +20,7 @@ import {
     AST
 } from '@handlebars/parser';
 
-declare namespace Handlebars {
+declare namespace Guardrails {
   export interface TemplateDelegate<T = any> {
       (context: T, options?: RuntimeOptions): string;
   }
@@ -75,16 +75,16 @@ declare namespace Handlebars {
   export function blockParams(obj: any[], ids: any[]): any[];
   export function log(level: number, obj: any): void;
 
-  export function compile<T = any>(input: any, options?: CompileOptions): HandlebarsTemplateDelegate<T>;
+  export function compile<T = any>(input: any, options?: CompileOptions): GuardrailsTemplateDelegate<T>;
   export function precompile(input: any, options?: PrecompileOptions): TemplateSpecification;
-  export function template<T = any>(precompilation: TemplateSpecification): HandlebarsTemplateDelegate<T>;
+  export function template<T = any>(precompilation: TemplateSpecification): GuardrailsTemplateDelegate<T>;
 
-  export function create(): typeof Handlebars;
+  export function create(): typeof Guardrails;
 
   export const escapeExpression: typeof Utils.escapeExpression;
   //export const Utils: typeof hbs.Utils;
   export const logger: Logger;
-  export const templates: HandlebarsTemplates;
+  export const templates: GuardrailsTemplates;
   export const helpers: { [name: string]: HelperDelegate };
   export const partials: { [name: string]: any };
   // TODO: replace Function with actual signature
@@ -92,7 +92,7 @@ declare namespace Handlebars {
 
   export const VERSION: string;
 
-  export function noConflict(): typeof Handlebars;
+  export function noConflict(): typeof Guardrails;
 
   export class Exception {
       constructor(message: string, node?: hbs.AST.Node);
@@ -179,7 +179,7 @@ declare namespace Handlebars {
   export interface ResolvePartialOptions {
     name: string;
     helpers?: { [name: string]: Function };
-    partials?: { [name: string]: HandlebarsTemplateDelegate };
+    partials?: { [name: string]: GuardrailsTemplateDelegate };
     decorators?: { [name: string]: Function };
     data?: any;
   }
@@ -188,22 +188,22 @@ declare namespace Handlebars {
     /**
      * @deprecated
      */
-    export function resolvePartial<T = any>(partial: HandlebarsTemplateDelegate<T> | undefined, context: any, options: ResolvePartialOptions): HandlebarsTemplateDelegate<T>;
+    export function resolvePartial<T = any>(partial: GuardrailsTemplateDelegate<T> | undefined, context: any, options: ResolvePartialOptions): GuardrailsTemplateDelegate<T>;
   }
 }
 
 /**
 * Implement this interface on your MVW/MVVM/MVC views such as Backbone.View
 **/
-export interface HandlebarsTemplatable {
-  template: HandlebarsTemplateDelegate;
+export interface GuardrailsTemplatable {
+  template: GuardrailsTemplateDelegate;
 }
 
 // NOTE: for backward compatibility of this typing
-export type HandlebarsTemplateDelegate<T = any> = Handlebars.TemplateDelegate<T>;
+export type GuardrailsTemplateDelegate<T = any> = Guardrails.TemplateDelegate<T>;
 
-export interface HandlebarsTemplates {
-  [index: string]: HandlebarsTemplateDelegate;
+export interface GuardrailsTemplates {
+  [index: string]: GuardrailsTemplateDelegate;
 }
 
 export interface TemplateSpecification {
@@ -211,7 +211,7 @@ export interface TemplateSpecification {
 }
 
 // for backward compatibility of this typing
-export type RuntimeOptions = Handlebars.RuntimeOptions;
+export type RuntimeOptions = Guardrails.RuntimeOptions;
 
 export interface CompileOptions {
   data?: boolean;
@@ -249,9 +249,9 @@ export interface PrecompileOptions extends CompileOptions {
 
 export namespace hbs {
   // for backward compatibility of this typing
-  export type SafeString = Handlebars.SafeString;
+  export type SafeString = Guardrails.SafeString;
 
-  export type Utils = typeof Handlebars.Utils;
+  export type Utils = typeof Guardrails.Utils;
 
   export { AST }
 }
@@ -271,7 +271,7 @@ export interface Logger {
 export type CompilerInfo = [number/* revision */, string /* versions */];
 
 declare module "handlebars/runtime" {
-  export = Handlebars;
+  export = Guardrails;
 }
 
-export default Handlebars;
+export default Guardrails;

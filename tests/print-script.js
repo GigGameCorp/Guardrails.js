@@ -4,11 +4,11 @@
 var script = process.argv[2].replace(/\\n/g, '\n'),
   verbose = process.argv[3] === '-v';
 
-var Handlebars = require('./../lib'),
+var Guardrails = require('./../lib'),
   SourceMap = require('source-map'),
   SourceMapConsumer = SourceMap.SourceMapConsumer;
 
-var template = Handlebars.precompile(script, {
+var template = Guardrails.precompile(script, {
   srcName: 'input.hbs',
   destName: 'output.js',
 

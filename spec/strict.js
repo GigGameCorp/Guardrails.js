@@ -1,4 +1,4 @@
-var Exception = Handlebars.Exception;
+var Exception = Guardrails.Exception;
 
 describe('strict', function () {
   describe('strict mode', function () {

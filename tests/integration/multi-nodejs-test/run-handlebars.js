@@ -1,10 +1,10 @@
-// This test should run successfully with node 0.10++ as long as Handlebars has been compiled before
+// This test should run successfully with node 0.10++ as long as Guardrails has been compiled before
 var assert = require('assert');
-var Handlebars = require('handlebars');
+var Guardrails = require('handlebars');
 
-console.log('Testing built Handlebars with Node version ' + process.version);
+console.log('Testing built Guardrails with Node version ' + process.version);
 
-var template = Handlebars.compile('Author: {{author}}');
+var template = Guardrails.compile('Author: {{author}}');
 var output = template({ author: 'Yehuda' });
 assert.strictEqual(output, 'Author: Yehuda');
 

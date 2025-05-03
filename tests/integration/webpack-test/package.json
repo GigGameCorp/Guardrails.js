@@ -1,6 +1,6 @@
 {
   "name": "webpack-test",
-  "description": "Various tests with Handlebars and multiple webpack versions",
+  "description": "Various tests with Guardrails and multiple webpack versions",
   "version": "1.0.0",
   "private": true,
   "scripts": {

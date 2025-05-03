@@ -60,20 +60,20 @@ module.exports = function (grunt) {
         context: __dirname,
         output: {
           path: 'dist/',
-          library: 'Handlebars',
+          library: 'Guardrails',
           libraryTarget: 'umd',
         },
       },
       handlebars: {
         entry: './dist/cjs/handlebars.js',
         output: {
-          filename: 'handlebars.js',
+          filename: 'guardrails.js',
         },
       },
       runtime: {
         entry: './dist/cjs/handlebars.runtime.js',
         output: {
-          filename: 'handlebars.runtime.js',
+          filename: 'guardrails.runtime.js',
         },
       },
     },
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
           {
             cwd: 'dist/',
             expand: true,
-            src: ['handlebars*.js', '!*.min.js'],
+            src: ['guardrails*.js', '!*.min.js'],
             dest: 'dist/',
             rename: function (dest, src) {
               return dest + src.replace(/\.js$/, '.min.js');

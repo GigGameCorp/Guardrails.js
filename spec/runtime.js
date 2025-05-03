@@ -3,21 +3,21 @@ describe('runtime', function () {
     it('should throw on invalid templates', function () {
       shouldThrow(
         function () {
-          Handlebars.template({});
+          Guardrails.template({});
         },
         Error,
         'Unknown template object: object'
       );
       shouldThrow(
         function () {
-          Handlebars.template();
+          Guardrails.template();
         },
         Error,
         'Unknown template object: undefined'
       );
       shouldThrow(
         function () {
-          Handlebars.template('');
+          Guardrails.template('');
         },
         Error,
         'Unknown template object: string'
@@ -26,32 +26,32 @@ describe('runtime', function () {
     it('should throw on version mismatch', function () {
       shouldThrow(
         function () {
-          Handlebars.template({
+          Guardrails.template({
             main: {},
-            compiler: [Handlebars.COMPILER_REVISION + 1],
+            compiler: [Guardrails.COMPILER_REVISION + 1],
           });
         },
         Error,
-        /Template was precompiled with a newer version of Handlebars than the current runtime/
+        /Template was precompiled with a newer version of Guardrails than the current runtime/
       );
       shouldThrow(
         function () {
-          Handlebars.template({
+          Guardrails.template({
             main: {},
-            compiler: [Handlebars.LAST_COMPATIBLE_COMPILER_REVISION - 1],
+            compiler: [Guardrails.LAST_COMPATIBLE_COMPILER_REVISION - 1],
           });
         },
         Error,
-        /Template was precompiled with an older version of Handlebars than the current runtime/
+        /Template was precompiled with an older version of Guardrails than the current runtime/
       );
       shouldThrow(
         function () {
-          Handlebars.template({
+          Guardrails.template({
             main: {},
           });
         },
         Error,
-        /Template was precompiled with an older version of Handlebars than the current runtime/
+        /Template was precompiled with an older version of Guardrails than the current runtime/
       );
     });
   });
@@ -62,15 +62,15 @@ describe('runtime', function () {
     }
 
     it('should reset on no conflict', function () {
-      var reset = Handlebars;
-      Handlebars.noConflict();
-      equal(Handlebars, 'no-conflict');
+      var reset = Guardrails;
+      Guardrails.noConflict();
+      equal(Guardrails, 'no-conflict');
 
-      Handlebars = 'really, none';
+      Guardrails = 'really, none';
       reset.noConflict();
-      equal(Handlebars, 'really, none');
+      equal(Guardrails, 'really, none');
 
-      Handlebars = reset;
+      Guardrails = reset;
     });
   });
 });

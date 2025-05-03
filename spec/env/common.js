@@ -122,10 +122,10 @@ global.shouldThrow = function (callback, type, msg) {
 };
 
 global.expectTemplate = function (templateAsString) {
-  return new HandlebarsTestBench(templateAsString);
+  return new GuardrailsTestBench(templateAsString);
 };
 
-function HandlebarsTestBench(templateAsString) {
+function GuardrailsTestBench(templateAsString) {
   this.templateAsString = templateAsString;
   this.helpers = {};
   this.partials = {};
@@ -137,17 +137,17 @@ function HandlebarsTestBench(templateAsString) {
   this.runtimeOptions = {};
 }
 
-HandlebarsTestBench.prototype.withInput = function (input) {
+GuardrailsTestBench.prototype.withInput = function (input) {
   this.input = input;
   return this;
 };
 
-HandlebarsTestBench.prototype.withHelper = function (name, helperFunction) {
+GuardrailsTestBench.prototype.withHelper = function (name, helperFunction) {
   this.helpers[name] = helperFunction;
   return this;
 };
 
-HandlebarsTestBench.prototype.withHelpers = function (helperFunctions) {
+GuardrailsTestBench.prototype.withHelpers = function (helperFunctions) {
   var self = this;
   Object.keys(helperFunctions).forEach(function (name) {
     self.withHelper(name, helperFunctions[name]);
@@ -155,12 +155,12 @@ HandlebarsTestBench.prototype.withHelpers = function (helperFunctions) {
   return this;
 };
 
-HandlebarsTestBench.prototype.withPartial = function (name, partialAsString) {
+GuardrailsTestBench.prototype.withPartial = function (name, partialAsString) {
   this.partials[name] = partialAsString;
   return this;
 };
 
-HandlebarsTestBench.prototype.withPartials = function (partials) {
+GuardrailsTestBench.prototype.withPartials = function (partials) {
   var self = this;
   Object.keys(partials).forEach(function (name) {
     self.withPartial(name, partials[name]);
@@ -168,7 +168,7 @@ HandlebarsTestBench.prototype.withPartials = function (partials) {
   return this;
 };
 
-HandlebarsTestBench.prototype.withDecorator = function (
+GuardrailsTestBench.prototype.withDecorator = function (
   name,
   decoratorFunction
 ) {
@@ -176,7 +176,7 @@ HandlebarsTestBench.prototype.withDecorator = function (
   return this;
 };
 
-HandlebarsTestBench.prototype.withDecorators = function (decorators) {
+GuardrailsTestBench.prototype.withDecorators = function (decorators) {
   var self = this;
   Object.keys(decorators).forEach(function (name) {
     self.withDecorator(name, decorators[name]);
@@ -184,22 +184,22 @@ HandlebarsTestBench.prototype.withDecorators = function (decorators) {
   return this;
 };
 
-HandlebarsTestBench.prototype.withCompileOptions = function (compileOptions) {
+GuardrailsTestBench.prototype.withCompileOptions = function (compileOptions) {
   this.compileOptions = compileOptions;
   return this;
 };
 
-HandlebarsTestBench.prototype.withRuntimeOptions = function (runtimeOptions) {
+GuardrailsTestBench.prototype.withRuntimeOptions = function (runtimeOptions) {
   this.runtimeOptions = runtimeOptions;
   return this;
 };
 
-HandlebarsTestBench.prototype.withMessage = function (message) {
+GuardrailsTestBench.prototype.withMessage = function (message) {
   this.message = message;
   return this;
 };
 
-HandlebarsTestBench.prototype.toCompileTo = function (expectedOutputAsString) {
+GuardrailsTestBench.prototype.toCompileTo = function (expectedOutputAsString) {
   expect(this._compileAndExecute()).to.equal(
     expectedOutputAsString,
     this.message
@@ -207,14 +207,14 @@ HandlebarsTestBench.prototype.toCompileTo = function (expectedOutputAsString) {
 };
 
 // see chai "to.throw" (https://www.chaijs.com/api/bdd/#method_throw)
-HandlebarsTestBench.prototype.toThrow = function (errorLike, errMsgMatcher) {
+GuardrailsTestBench.prototype.toThrow = function (errorLike, errMsgMatcher) {
   var self = this;
   expect(function () {
     self._compileAndExecute();
   }).to.throw(errorLike, errMsgMatcher, this.message);
 };
 
-HandlebarsTestBench.prototype._compileAndExecute = function () {
+GuardrailsTestBench.prototype._compileAndExecute = function () {
   var compile =
     Object.keys(this.partials).length > 0
       ? CompilerContext.compileWithPartial
@@ -226,7 +226,7 @@ HandlebarsTestBench.prototype._compileAndExecute = function () {
   return template(this.input, combinedRuntimeOptions);
 };
 
-HandlebarsTestBench.prototype._combineRuntimeOptions = function () {
+GuardrailsTestBench.prototype._combineRuntimeOptions = function () {
   var self = this;
   var combinedRuntimeOptions = {};
   Object.keys(this.runtimeOptions).forEach(function (key) {

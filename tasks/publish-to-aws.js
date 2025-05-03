@@ -54,10 +54,10 @@ module.exports = function (grunt) {
 
   async function publishSuffix(suffix) {
     const filenames = [
-      'handlebars.js',
-      'handlebars.min.js',
-      'handlebars.runtime.js',
-      'handlebars.runtime.min.js',
+      'guardrails.js',
+      'guardrails.min.js',
+      'guardrails.runtime.js',
+      'guardrails.runtime.min.js',
     ];
     const publishPromises = filenames.map(async (filename) => {
       const nameInBucket = getNameInBucket(filename, suffix);

@@ -141,9 +141,9 @@ describe('subexpressions', function () {
       .withHelpers({
         input: function (options) {
           var hash = options.hash;
-          var ariaLabel = Handlebars.Utils.escapeExpression(hash['aria-label']);
-          var placeholder = Handlebars.Utils.escapeExpression(hash.placeholder);
-          return new Handlebars.SafeString(
+          var ariaLabel = Guardrails.Utils.escapeExpression(hash['aria-label']);
+          var placeholder = Guardrails.Utils.escapeExpression(hash.placeholder);
+          return new Guardrails.SafeString(
             '<input aria-label="' +
               ariaLabel +
               '" placeholder="' +
@@ -152,7 +152,7 @@ describe('subexpressions', function () {
           );
         },
         t: function (defaultString) {
-          return new Handlebars.SafeString(defaultString);
+          return new Guardrails.SafeString(defaultString);
         },
       })
       .toCompileTo('<input aria-label="Name" placeholder="Example User" />');
@@ -171,9 +171,9 @@ describe('subexpressions', function () {
       .withHelpers({
         input: function (options) {
           var hash = options.hash;
-          var ariaLabel = Handlebars.Utils.escapeExpression(hash['aria-label']);
-          var placeholder = Handlebars.Utils.escapeExpression(hash.placeholder);
-          return new Handlebars.SafeString(
+          var ariaLabel = Guardrails.Utils.escapeExpression(hash['aria-label']);
+          var placeholder = Guardrails.Utils.escapeExpression(hash.placeholder);
+          return new Guardrails.SafeString(
             '<input aria-label="' +
               ariaLabel +
               '" placeholder="' +
@@ -182,7 +182,7 @@ describe('subexpressions', function () {
           );
         },
         t: function (defaultString) {
-          return new Handlebars.SafeString(defaultString);
+          return new Guardrails.SafeString(defaultString);
         },
       })
       .toCompileTo('<input aria-label="Name" placeholder="Example User" />');

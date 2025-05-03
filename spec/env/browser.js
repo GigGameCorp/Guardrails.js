@@ -11,17 +11,17 @@ global.expect = chai.expect;
 
 global.sinon = require('sinon');
 
-global.Handlebars = 'no-conflict';
+global.Guardrails = 'no-conflict';
 
-var filename = 'dist/handlebars.js';
+var filename = 'dist/guardrails.js';
 if (global.minimizedTest) {
-  filename = 'dist/handlebars.min.js';
+  filename = 'dist/guardrails.min.js';
 }
-var distHandlebars = fs.readFileSync(
+var distGuardrails = fs.readFileSync(
   require.resolve('../../' + filename),
   'utf-8'
 );
-vm.runInThisContext(distHandlebars, filename);
+vm.runInThisContext(distGuardrails, filename);
 
 global.CompilerContext = {
   browser: true,

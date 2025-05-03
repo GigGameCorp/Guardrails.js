@@ -1,9 +1,9 @@
 describe('ast', function () {
-  if (!Handlebars.AST) {
+  if (!Guardrails.AST) {
     return;
   }
 
-  var AST = Handlebars.AST;
+  var AST = Guardrails.AST;
 
   describe('BlockStatement', function () {
     it('should throw on mustache mismatch', function () {
@@ -11,7 +11,7 @@ describe('ast', function () {
         function () {
           handlebarsEnv.parse('\n  {{#foo}}{{/bar}}');
         },
-        Handlebars.Exception,
+        Guardrails.Exception,
         "foo doesn't match bar - 2:5"
       );
     });
@@ -118,7 +118,7 @@ describe('ast', function () {
     }
 
     /* eslint-disable no-multi-spaces */
-    ast = Handlebars.parse(
+    ast = Guardrails.parse(
       'line 1 {{line1Token}}\n' + // 1
         ' line 2 {{line2token}}\n' + // 2
         ' line 3 {{#blockHelperOnLine3}}\n' + // 3

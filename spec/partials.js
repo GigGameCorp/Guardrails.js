@@ -65,7 +65,7 @@ describe('partials', function () {
       })
       .withPartial('dude', '{{name}} ({{url}}) ')
       .toThrow(
-        Handlebars.Exception,
+        Guardrails.Exception,
         'The partial "missing" could not be found'
       );
   });
@@ -158,7 +158,7 @@ describe('partials', function () {
 
   it('rendering undefined partial throws an exception', function () {
     expectTemplate('{{> whatever}}').toThrow(
-      Handlebars.Exception,
+      Guardrails.Exception,
       'The partial "whatever" could not be found'
     );
   });
@@ -169,14 +169,14 @@ describe('partials', function () {
         var undef;
         handlebarsEnv.registerPartial('undefined_test', undef);
       },
-      Handlebars.Exception,
+      Guardrails.Exception,
       'Attempting to register a partial called "undefined_test" as undefined'
     );
   });
 
   it('rendering template partial in vm mode throws an exception', function () {
     expectTemplate('{{> whatever}}').toThrow(
-      Handlebars.Exception,
+      Guardrails.Exception,
       'The partial "whatever" could not be found'
     );
   });
@@ -552,8 +552,8 @@ describe('partials', function () {
   });
 
   it('should pass compiler flags', function () {
-    if (Handlebars.compile) {
-      var env = Handlebars.create();
+    if (Guardrails.compile) {
+      var env = Guardrails.create();
       env.registerPartial('partial', '{{foo}}');
       var template = env.compile('{{foo}} {{> partial}}', { noEscape: true });
       equal(template({ foo: '<' }), '< <');

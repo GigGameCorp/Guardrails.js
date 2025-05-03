@@ -9,12 +9,12 @@ function shouldBeToken(result, name, text) {
 }
 
 describe('Tokenizer', function () {
-  if (!Handlebars.Parser) {
+  if (!Guardrails.Parser) {
     return;
   }
 
   function tokenize(template) {
-    var parser = Handlebars.Parser,
+    var parser = Guardrails.Parser,
       lexer = parser.lexer;
 
     lexer.setInput(template);

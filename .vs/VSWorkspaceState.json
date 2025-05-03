@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github\\workflows",
+    "\\dist\\cjs",
+    "\\tasks\\tests",
+    "\\tasks\\util",
+    "\\tests",
+    "\\tests\\bench",
+    "\\tests\\browser",
+    "\\tests\\browser\\tests"
+  ],
+  "SelectedNode": "\\tests\\browser",
+  "PreviewInSolutionExplorer": false
+}

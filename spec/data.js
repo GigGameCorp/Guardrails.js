@@ -19,10 +19,10 @@ describe('data', function () {
   });
 
   it('deep @foo triggers automatic top-level data', function () {
-    var helpers = Handlebars.createFrame(handlebarsEnv.helpers);
+    var helpers = Guardrails.createFrame(handlebarsEnv.helpers);
 
     helpers.let = function (options) {
-      var frame = Handlebars.createFrame(options.data);
+      var frame = Guardrails.createFrame(options.data);
 
       for (var prop in options.hash) {
         if (prop in options.hash) {
@@ -118,7 +118,7 @@ describe('data', function () {
       .withInput({ bar: { baz: 'hello world' } })
       .withCompileOptions({ data: true })
       .withHelper('let', function (options) {
-        var frame = Handlebars.createFrame(options.data);
+        var frame = Guardrails.createFrame(options.data);
         for (var prop in options.hash) {
           if (prop in options.hash) {
             frame[prop] = options.hash[prop];
@@ -263,7 +263,7 @@ describe('data', function () {
       )
         .withInput({ foo: 'hello' })
         .withHelper('helper', function (options) {
-          var frame = Handlebars.createFrame(options.data);
+          var frame = Guardrails.createFrame(options.data);
           frame.depth = options.data.depth + 1;
           return options.fn(this, { data: frame });
         })

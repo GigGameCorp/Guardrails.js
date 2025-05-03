@@ -1,4 +1,4 @@
-# Handlebars Compiler APIs
+# Guardrails Compiler APIs
 
 There are a number of formal APIs that tool implementors may interact with.
 
@@ -6,14 +6,14 @@ There are a number of formal APIs that tool implementors may interact with.
 
 Other tools may interact with the formal AST as defined below. Any JSON structure matching this pattern may be used and passed into the `compile` and `precompile` methods in the same way as the text for a template.
 
-AST structures may be generated either with the `Handlebars.parse` method and then manipulated, via the `Handlebars.AST` objects of the same name, or constructed manually as a generic JavaScript object matching the structure defined below.
+AST structures may be generated either with the `Guardrails.parse` method and then manipulated, via the `Guardrails.AST` objects of the same name, or constructed manually as a generic JavaScript object matching the structure defined below.
 
 ```javascript
-var ast = Handlebars.parse(myTemplate);
+var ast = Guardrails.parse(myTemplate);
 
 // Modify ast
 
-Handlebars.precompile(ast);
+Guardrails.precompile(ast);
 ```
 
 ### Parsing
@@ -22,27 +22,27 @@ There are two primary APIs that are used to parse an existing template into the 
 
 #### parseWithoutProcessing
 
-`Handlebars.parseWithoutProcessing` is the primary mechanism to turn a raw template string into the Handlebars AST described in this document. No processing is done on the resulting AST which makes this ideal for codemod (for source to source transformation) tooling.
+`Guardrails.parseWithoutProcessing` is the primary mechanism to turn a raw template string into the Guardrails AST described in this document. No processing is done on the resulting AST which makes this ideal for codemod (for source to source transformation) tooling.
 
 Example:
 
 ```js
-let ast = Handlebars.parseWithoutProcessing(myTemplate);
+let ast = Guardrails.parseWithoutProcessing(myTemplate);
 ```
 
 #### parse
 
-`Handlebars.parse` will parse the template with `parseWithoutProcessing` (see above) then it will update the AST to strip extraneous whitespace. The whitespace stripping functionality handles two distinct situations:
+`Guardrails.parse` will parse the template with `parseWithoutProcessing` (see above) then it will update the AST to strip extraneous whitespace. The whitespace stripping functionality handles two distinct situations:
 
 - Removes whitespace around dynamic statements that are on a line by themselves (aka "stand alone")
 - Applies "whitespace control" characters (i.e. `~`) by truncating the `ContentStatement` `value` property appropriately (e.g. `\n\n{{~foo}}` would have a `ContentStatement` with a `value` of `''`)
 
-`Handlebars.parse` is used internally by `Handlebars.precompile` and `Handlebars.compile`.
+`Guardrails.parse` is used internally by `Guardrails.precompile` and `Guardrails.compile`.
 
 Example:
 
 ```js
-let ast = Handlebars.parse(myTemplate);
+let ast = Guardrails.parse(myTemplate);
 ```
 
 ### Basic
@@ -263,12 +263,12 @@ interface StripFlags {
 
 ## AST Visitor
 
-`Handlebars.Visitor` is available as a base class for general interaction with AST structures. This will by default traverse the entire tree and individual methods may be overridden to provide specific responses to particular nodes.
+`Guardrails.Visitor` is available as a base class for general interaction with AST structures. This will by default traverse the entire tree and individual methods may be overridden to provide specific responses to particular nodes.
 
 Recording all referenced partial names:
 
 ```javascript
-var Visitor = Handlebars.Visitor;
+var Visitor = Guardrails.Visitor;
 
 function ImportScanner() {
   this.partials = [];
@@ -293,7 +293,7 @@ Implementors that may need to support mutation mode are encouraged to utilize th
 
 ## JavaScript Compiler
 
-The `Handlebars.JavaScriptCompiler` object has a number of methods that may be customized to alter the output of the compiler:
+The `Guardrails.JavaScriptCompiler` object has a number of methods that may be customized to alter the output of the compiler:
 
 - `nameLookup(parent, name, type)`
   Used to generate the code to resolve a given path component.
@@ -328,9 +328,9 @@ There is also [a jsfiddle with this code](https://jsfiddle.net/9D88g/162/) if yo
 
 ```javascript
 function MyCompiler() {
-  Handlebars.JavaScriptCompiler.apply(this, arguments);
+  Guardrails.JavaScriptCompiler.apply(this, arguments);
 }
-MyCompiler.prototype = new Handlebars.JavaScriptCompiler();
+MyCompiler.prototype = new Guardrails.JavaScriptCompiler();
 
 // Use this compile to compile BlockStatment-Blocks
 MyCompiler.prototype.compiler = MyCompiler;
@@ -342,7 +342,7 @@ MyCompiler.prototype.nameLookup = function (parent, name, type) {
       JSON.stringify(name),
     ]);
   } else {
-    return Handlebars.JavaScriptCompiler.prototype.nameLookup.call(
+    return Guardrails.JavaScriptCompiler.prototype.nameLookup.call(
       this,
       parent,
       name,
@@ -351,7 +351,7 @@ MyCompiler.prototype.nameLookup = function (parent, name, type) {
   }
 };
 
-var env = Handlebars.create();
+var env = Guardrails.create();
 env.registerHelper('lookupLowerCase', function (parent, name) {
   return parent[name.toLowerCase()];
 });

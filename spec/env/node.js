@@ -8,7 +8,7 @@ global.expect = chai.expect;
 
 global.sinon = require('sinon');
 
-global.Handlebars = require('../../lib');
+global.Guardrails = require('../../lib');
 
 global.CompilerContext = {
   compile: function (template, options) {

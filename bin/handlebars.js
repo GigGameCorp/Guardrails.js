@@ -18,7 +18,7 @@ const yargs = require('yargs')
   })
   .option('c', {
     type: 'string',
-    description: 'Exports CommonJS style, path to Handlebars module',
+    description: 'Exports CommonJS style, path to Guardrails module',
     alias: 'commonjs',
     default: null,
   })
@@ -47,7 +47,7 @@ const yargs = require('yargs')
     type: 'string',
     description: 'Template namespace',
     alias: 'namespace',
-    default: 'Handlebars.templates',
+    default: 'Guardrails.templates',
   })
   .option('s', {
     type: 'boolean',

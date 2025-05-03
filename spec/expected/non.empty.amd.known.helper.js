@@ -1,5 +1,5 @@
-define(['handlebars.runtime'], function(Handlebars) {
-Handlebars = Handlebars["default"]; var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+define(['handlebars.runtime'], function(Guardrails) {
+Guardrails = Guardrails["default"]; var template = Guardrails.template, templates = Guardrails.templates = Guardrails.templates || {};
 return templates['known.helpers'] = template({"1":function(container,depth0,helpers,partials,data) {
 var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
 if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {

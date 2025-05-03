@@ -5,7 +5,7 @@ describe('precompiler', function () {
     return;
   }
 
-  var Handlebars = require('../lib'),
+  var Guardrails = require('../lib'),
     Precompiler = require('../dist/cjs/precompiler'),
     fs = require('fs'),
     uglify = require('uglify-js');
@@ -54,7 +54,7 @@ describe('precompiler', function () {
   }
 
   beforeEach(function () {
-    precompile = Handlebars.precompile;
+    precompile = Guardrails.precompile;
     minify = uglify.minify;
     writeFileSync = fs.writeFileSync;
 
@@ -76,7 +76,7 @@ describe('precompiler', function () {
     };
   });
   afterEach(function () {
-    Handlebars.precompile = precompile;
+    Guardrails.precompile = precompile;
     uglify.minify = minify;
     fs.writeFileSync = writeFileSync;
     console.log = logFunction;
@@ -85,14 +85,14 @@ describe('precompiler', function () {
 
   it('should output version', function () {
     Precompiler.cli({ templates: [], version: true });
-    equals(log, Handlebars.VERSION);
+    equals(log, Guardrails.VERSION);
   });
   it('should throw if lacking templates', function () {
     shouldThrow(
       function () {
         Precompiler.cli({ templates: [] });
       },
-      Handlebars.Exception,
+      Guardrails.Exception,
       'Must define at least one template or directory.'
     );
   });
@@ -105,7 +105,7 @@ describe('precompiler', function () {
       function () {
         Precompiler.cli({ templates: [__dirname], simple: true, min: true });
       },
-      Handlebars.Exception,
+      Guardrails.Exception,
       'Unable to minimize simple output'
     );
   });
@@ -120,7 +120,7 @@ describe('precompiler', function () {
           simple: true,
         });
       },
-      Handlebars.Exception,
+      Guardrails.Exception,
       'Unable to output multiple templates in simple mode'
     );
   });
@@ -129,7 +129,7 @@ describe('precompiler', function () {
       function () {
         Precompiler.cli({ templates: [{ source: '' }], amd: true });
       },
-      Handlebars.Exception,
+      Guardrails.Exception,
       'Name missing for template'
     );
   });
@@ -138,34 +138,34 @@ describe('precompiler', function () {
       function () {
         Precompiler.cli({ hasDirectory: true, templates: [1], simple: true });
       },
-      Handlebars.Exception,
+      Guardrails.Exception,
       'Unable to output multiple templates in simple mode'
     );
   });
 
   it('should output simple templates', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'simple';
     };
     Precompiler.cli({ templates: [emptyTemplate], simple: true });
     equal(log, 'simple\n');
   });
   it('should default to simple templates', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'simple';
     };
     Precompiler.cli({ templates: [{ source: '' }] });
     equal(log, 'simple\n');
   });
   it('should output amd templates', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'amd';
     };
     Precompiler.cli({ templates: [emptyTemplate], amd: true });
     equal(/template\(amd\)/.test(log), true);
   });
   it('should output multiple amd', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'amd';
     };
     Precompiler.cli({
@@ -178,15 +178,15 @@ describe('precompiler', function () {
     equal(/template\(amd\)/.test(log), true);
   });
   it('should output amd partials', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'amd';
     };
     Precompiler.cli({ templates: [emptyTemplate], amd: true, partial: true });
-    equal(/return Handlebars\.partials\['empty'\]/.test(log), true);
+    equal(/return Guardrails\.partials\['empty'\]/.test(log), true);
     equal(/template\(amd\)/.test(log), true);
   });
   it('should output multiple amd partials', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'amd';
     };
     Precompiler.cli({
@@ -194,11 +194,11 @@ describe('precompiler', function () {
       amd: true,
       partial: true,
     });
-    equal(/return Handlebars\.partials\[/.test(log), false);
+    equal(/return Guardrails\.partials\[/.test(log), false);
     equal(/template\(amd\)/.test(log), true);
   });
   it('should output commonjs templates', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'commonjs';
     };
     Precompiler.cli({ templates: [emptyTemplate], commonjs: true });
@@ -206,7 +206,7 @@ describe('precompiler', function () {
   });
 
   it('should set data flag', function () {
-    Handlebars.precompile = function (data, options) {
+    Guardrails.precompile = function (data, options) {
       equal(options.data, true);
       return 'simple';
     };
@@ -215,7 +215,7 @@ describe('precompiler', function () {
   });
 
   it('should set known helpers', function () {
-    Handlebars.precompile = function (data, options) {
+    Guardrails.precompile = function (data, options) {
       equal(options.knownHelpers.foo, true);
       return 'simple';
     };
@@ -223,7 +223,7 @@ describe('precompiler', function () {
     equal(log, 'simple\n');
   });
   it('should output to file system', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'simple';
     };
     Precompiler.cli({
@@ -237,7 +237,7 @@ describe('precompiler', function () {
   });
 
   it('should output minimized templates', function () {
-    Handlebars.precompile = function () {
+    Guardrails.precompile = function () {
       return 'amd';
     };
     uglify.minify = function () {
@@ -252,7 +252,7 @@ describe('precompiler', function () {
     error.code = 'MODULE_NOT_FOUND';
     mockRequireUglify(error, function () {
       var Precompiler = require('../dist/cjs/precompiler');
-      Handlebars.precompile = function () {
+      Guardrails.precompile = function () {
         return 'amd';
       };
       Precompiler.cli({ templates: [emptyTemplate], min: true });
@@ -267,7 +267,7 @@ describe('precompiler', function () {
       shouldThrow(
         function () {
           var Precompiler = require('../dist/cjs/precompiler');
-          Handlebars.precompile = function () {
+          Guardrails.precompile = function () {
             return 'amd';
           };
           Precompiler.cli({ templates: [emptyTemplate], min: true });

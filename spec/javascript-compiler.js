@@ -1,5 +1,5 @@
 describe('javascript-compiler api', function () {
-  if (!Handlebars.JavaScriptCompiler) {
+  if (!Guardrails.JavaScriptCompiler) {
     return;
   }
 

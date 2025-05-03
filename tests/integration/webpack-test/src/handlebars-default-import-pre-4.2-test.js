@@ -1,6 +1,6 @@
-import Handlebars from 'handlebars/dist/handlebars';
+import Guardrails from 'handlebars/dist/guardrails';
 
 import { assertEquals } from './lib/assert';
 
-const template = Handlebars.compile('Author: {{author}}');
+const template = Guardrails.compile('Author: {{author}}');
 assertEquals(template({ author: 'Yehuda' }), 'Author: Yehuda');

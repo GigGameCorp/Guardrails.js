@@ -1,6 +1,6 @@
 {
   "name": "rollup-test",
-  "description": "Various tests with Handlebars and rollup",
+  "description": "Various tests with Guardrails and rollup",
   "version": "1.0.0",
   "scripts": {
     "build": "rollup --config rollup.config.js"

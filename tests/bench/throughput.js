@@ -1,7 +1,7 @@
 var _ = require('underscore'),
   runner = require('./util/template-runner'),
   dust,
-  Handlebars,
+  Guardrails,
   Mustache;
 
 try {
@@ -30,8 +30,8 @@ function makeSuite(bench, name, template, handlebarsOnly) {
     dustOut,
     mustacheOut;
 
-  var handlebar = Handlebars.compile(template.handlebars, { data: false }),
-    compat = Handlebars.compile(template.handlebars, {
+  var handlebar = Guardrails.compile(template.handlebars, { data: false }),
+    compat = Guardrails.compile(template.handlebars, {
       data: false,
       compat: true,
     }),
@@ -39,9 +39,9 @@ function makeSuite(bench, name, template, handlebarsOnly) {
   _.each(
     template.partials && template.partials.handlebars,
     function (partial, partialName) {
-      Handlebars.registerPartial(
+      Guardrails.registerPartial(
         partialName,
-        Handlebars.compile(partial, { data: false })
+        Guardrails.compile(partial, { data: false })
       );
     }
   );
@@ -105,7 +105,7 @@ function makeSuite(bench, name, template, handlebarsOnly) {
       throw new Error(
         'Template output mismatch: ' +
           name +
-          '\n\nHandlebars: ' +
+          '\n\nGuardrails: ' +
           handlebarsOut +
           '\n\n' +
           lang +
@@ -122,7 +122,7 @@ function makeSuite(bench, name, template, handlebarsOnly) {
 
 module.exports = function (grunt, callback) {
   // Deferring load in case we are being run inline with the grunt build
-  Handlebars = require('../../lib');
+  Guardrails = require('../../lib');
 
   console.log('Execution Throughput');
   runner(grunt, makeSuite, function (times, scaled) {

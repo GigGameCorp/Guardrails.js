@@ -8,15 +8,15 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Yehuda Katz"]
   gem.email         = ["wycats@gmail.com"]
   gem.date          = Time.now.strftime("%Y-%m-%d")
-  gem.description   = %q{Handlebars.js source code wrapper for (pre)compilation gems.}
-  gem.summary       = %q{Handlebars.js source code wrapper}
+  gem.description   = %q{Guardrails.js source code wrapper for (pre)compilation gems.}
+  gem.summary       = %q{Guardrails.js source code wrapper}
   gem.homepage      = "https://github.com/handlebars-lang/handlebars.js/"
   gem.version       = package["version"].sub "-", "."
   gem.license       = "MIT"
 
   gem.files = [
-    'handlebars.js',
-    'handlebars.runtime.js',
+    'guardrails.js',
+    'guardrails.runtime.js',
     'lib/handlebars/source.rb'
   ]
 end

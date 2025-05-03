@@ -1,7 +1,7 @@
 {
-  "name": "handlebars",
+  "name": "guardrails",
   "version": "5.0.0-alpha.1",
-  "main": "handlebars.js",
+  "main": "guardrails.js",
   "license": "MIT",
   "dependencies": {}
 }

@@ -1,7 +1,7 @@
 module.exports = {
   globals: {
     CompilerContext: true,
-    Handlebars: true,
+    Guardrails: true,
     handlebarsEnv: true,
     shouldCompileTo: true,
     shouldCompileToWithPartials: true,

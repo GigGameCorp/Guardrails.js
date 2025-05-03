@@ -1,7 +1,7 @@
-import * as Handlebars from 'handlebars/runtime';
+import * as Guardrails from 'handlebars/runtime';
 import { assertEquals } from './lib/assert';
 
-const template = Handlebars.template({
+const template = Guardrails.template({
   compiler: [8, '>= 4.3.0'],
   main: function (container, depth0, helpers, partials, data) {
     var helper,

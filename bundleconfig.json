@@ -1,0 +1,10 @@
+[
+  {
+    "outputFileName": "dist/guardrails.runtime.min.js",
+    "inputFiles": ["dist/guardrails.runtime.js"]
+  },
+  {
+    "outputFileName": "dist/guardrails.min.js",
+    "inputFiles": ["dist/guardrails.js"]
+  }
+]
